@@ -12,7 +12,7 @@ describe("Dater on non strict mode", () => {
         const randomDateString2: string = '2027-03-24T05:11:30.444Z';
 
         expect(dater(randomDateString1)).to.deep.eq(new Date(randomDateString1));
-        expect((dater(randomDateString2) as Date).toISOString()).to.eq(randomDateString2);
+        expect(dater(randomDateString2).toISOString()).to.eq(randomDateString2);
         
 		// Datify('2011-09-13T17:09:30.909Z').constructor.toString().should.contain('function Date');
     });

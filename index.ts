@@ -1,21 +1,23 @@
 import traverse from 'traverse';
+
 import ISOStringRegEx from './consts.js';
+import isArrayOrObject from './utils.js'
 import { DaterConfig, DaterIterable } from './dater.js';
 
-const isDaterAppropriate = (value: any, strictDating: boolean): boolean => 
-    typeof value === 'string' && strictDating ? ISOStringRegEx.test(value) : true;
+function isDaterAppropriate (value: any, strictDating: boolean): boolean {
+    return typeof value === 'string' && strictDating ? ISOStringRegEx.test(value) : true;
+} ;
 
-const daterString = (value: any): Date | typeof value => {
+function daterString (value: string): Date | string {
     const parsedDate: Date = new Date(value);
-    if (!isNaN(parsedDate.getTime())) return parsedDate;
-    return value;
+    return !isNaN(parsedDate.getTime()) ? parsedDate : value;
 };
 
-const dater = (obj: DaterIterable, config: DaterConfig = { strictDating: true }): DaterIterable | Date  => {
-    obj = traverse.map(obj, (value: any) => {
-        if (isDaterAppropriate(value, config.strictDating)) return daterString(value);
-    })
-    return obj;
+const dater =  (obj: any, config: DaterConfig = { strictDating: true }): any => {
+    if (!isArrayOrObject(obj)) return isDaterAppropriate(obj, config.strictDating) ? daterString(obj) as string | Date : obj as any;
+    return traverse.map(obj, (value: any) => {
+        return isDaterAppropriate(value, config.strictDating) ? daterString(value) : value;
+    }) as DaterIterable;
 };
 
 export default dater;

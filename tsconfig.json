@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "ESNext",
+    "module": "ESNext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipDefaultLibCheck": false,
     "skipLibCheck": false,
     "moduleResolution":"node"              
-  }
+  },
+  "include": ["dater.d.ts", "index.ts", "test/**/*"]
 }
