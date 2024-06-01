@@ -1,0 +1,26 @@
+{
+  "name": "dater",
+  "version": "1.0.0",
+  "description": "A package for converting your fields to dates",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "dev": "nodemon index.ts",
+    "build": "tsc --build",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "date",
+    "dater"
+  ],
+  "author": "Joni Moreno",
+  "license": "MIT",
+  "dependencies": {
+    "traverse": "^0.6.9"
+  },
+  "devDependencies": {
+    "@types/traverse": "^0.6.36",
+    "vite": "^5.2.12",
+    "vitest": "^1.6.0"
+  }
+}
