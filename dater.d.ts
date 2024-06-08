@@ -1,4 +1,4 @@
-export declare type DaterConfig = {
+export declare type Config = {
     strictDating: boolean
 };
 
@@ -14,4 +14,4 @@ export declare type DaterIterable = { [key: string]: any } | any[];
 * @returns The same object but with all relevant values converted to a date.
 */
 
-export declare function dater(obj: any, config: DaterConfig): DaterIterable; 
+export declare function dater(obj: any, config: Config): DaterIterable; 
