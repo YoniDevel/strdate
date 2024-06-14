@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import convert from '../index.js';
+import convert from '../src/converter.js';
 
 describe("ts-date-converter on non strict mode", () => {
     

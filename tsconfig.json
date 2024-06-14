@@ -9,5 +9,5 @@
     "skipLibCheck": false,
     "moduleResolution": "node"
   },
-  "include": ["index.d.ts", "index.ts", "test/**/*"]
+  "include": ["src/*", "test/*"]
 }
