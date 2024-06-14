@@ -7,7 +7,7 @@
     "strict": true,
     "skipDefaultLibCheck": false,
     "skipLibCheck": false,
-    "moduleResolution":"node"              
+    "moduleResolution": "node"
   },
-  "include": ["dater.d.ts", "index.ts", "test/**/*"]
+  "include": ["index.d.ts", "index.ts", "test/**/*"]
 }
