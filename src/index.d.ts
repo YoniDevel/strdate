@@ -1,26 +1,26 @@
 export declare type Config = {
-    strictDating: boolean
+  allowOtherFormats?: boolean,
+  convertFourFigitNumbers?: boolean,
 };
-
-export declare type Iterable = object | any[];
 
 /**
 * Convert all fields and subfields of a given object which have potential to become a date, to a date.
 * by default, only simple ISO strings will be converted. If you want to convert all fields which can be parsed to a date
 * set strict to false.
-* @param obj An iterable (meaning an ```object``` or ```array```).
-* @param config an object which holds the boolean value of ```strictDating```, which if set to false makes the date converter convert all
-* integer strings to a date besides only other ISODates. The default value is true.
+* @param obj anything.
+* @param config an object which holds the boolean values of ```allowOtherFormats```, which if set to true makes the date converter convert also
+* long and short js dates besides ISODates and ```convertFourFigitNumbers```, which if set to true makes the date converter 
+* convert 4 digit numbers to dates as well. Both default values of these fields are set to ```false```
 * @returns The same object but with all relevant values converted to a date.
 * @example
 * import convert from 'ts-date-converter';
 * 
-* const a = convert('Hello world!'); // will stay the same
-* const b = convert(true); // will stay the same
-* const c = convert(new Date('2050-10-29T18:45:06.820Z')); // will stay the same
-* const d = convert('03/25/2015'); // will stay a string
-* const d = convert('2001-04-20T10:20:30Z'); // will be converted to a date
-* const e = convert('1999-06-14'); // will be converted to a date
+* const a = datify('Hello world!'); // will stay the same
+* const b = datify(true); // will stay the same
+* const c = datify(new Date('2050-10-29T18:45:06.820Z')); // will stay the same
+* const d = datify('03/25/2015'); // will stay a string
+* const d = datify('2001-04-20T10:20:30Z'); // will be converted to a date
+* const e = datify('1999-06-14'); // will be converted to a date
 * const obj = {
 *   firstName: 'John',
     lastName: 'Doe',
@@ -29,7 +29,7 @@ export declare type Iterable = object | any[];
     likesTea: true,
     proffesions: ['lawyer', 'teacher', 'doctor'],
 * };
-  const convertedObject = convert(obj);
+  const convertedObject = datify(obj);
   // convertedObject will be {
   //  firstName: 'John',
   //  lastName: 'Doe',
@@ -40,4 +40,4 @@ export declare type Iterable = object | any[];
   //}
 */
 
-export declare function convert(obj: any, config: Config): Iterable; 
+export declare function datify(obj: any, config: Config): any; 
