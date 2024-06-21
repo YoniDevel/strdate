@@ -1,6 +1,7 @@
-export declare type Config = {
-  allowOtherFormats?: boolean,
-  convertFourFigitNumbers?: boolean,
+export declare type DateConverterConfig = {
+  convertShortDates?: boolean;
+  convertLongDates?: boolean;
+  convertFourFigitNumbers?: boolean;
 };
 
 /**
@@ -15,12 +16,12 @@ export declare type Config = {
 * @example
 * import convert from 'ts-date-converter';
 * 
-* const a = datify('Hello world!'); // will stay the same
-* const b = datify(true); // will stay the same
-* const c = datify(new Date('2050-10-29T18:45:06.820Z')); // will stay the same
-* const d = datify('03/25/2015'); // will stay a string
-* const d = datify('2001-04-20T10:20:30Z'); // will be converted to a date
-* const e = datify('1999-06-14'); // will be converted to a date
+* const a = convert('Hello world!'); // will stay the same
+* const b = convert(true); // will stay the same
+* const c = convert(new Date('2050-10-29T18:45:06.820Z')); // will stay the same
+* const d = convert('03/25/2015'); // will stay a string
+* const d = convert('2001-04-20T10:20:30Z'); // will be converted to a date
+* const e = convert('1999-06-14'); // will be converted to a date
 * const obj = {
 *   firstName: 'John',
     lastName: 'Doe',
@@ -29,7 +30,7 @@ export declare type Config = {
     likesTea: true,
     proffesions: ['lawyer', 'teacher', 'doctor'],
 * };
-  const convertedObject = datify(obj);
+  const convertedObject = convert(obj);
   // convertedObject will be {
   //  firstName: 'John',
   //  lastName: 'Doe',
@@ -40,4 +41,4 @@ export declare type Config = {
   //}
 */
 
-export declare function datify(obj: any, config: Config): any; 
+export declare function convert(obj: any, config: DateConverterConfig): any;

@@ -1,2 +1,3 @@
 # dater
-A typescript package for datifying objects
+
+A typescript package for converting objects
