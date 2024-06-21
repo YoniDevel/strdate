@@ -1,6 +1,7 @@
 export declare type DateConverterConfig = {
   convertShortDates?: boolean;
   convertLongDates?: boolean;
+  convertNonFullIsoDates?: boolean;
   convertFourFigitNumbers?: boolean;
 };
 
@@ -9,9 +10,10 @@ export declare type DateConverterConfig = {
 * by default, only simple ISO strings will be converted. If you want to convert all fields which can be parsed to a date
 * set strict to false.
 * @param obj anything.
-* @param config an object which holds the boolean values of ```allowOtherFormats```, which if set to true makes the date converter convert also
-* long and short js dates besides ISODates and ```convertFourFigitNumbers```, which if set to true makes the date converter 
-* convert 4 digit numbers to dates as well. Both default values of these fields are set to ```false```
+* @param config an object which holds the boolean values of ```convertShortDates```, which if set to true makes the date converter convert also
+* js short dates, ```convertLongDates``` which if set to true makes the date converter convert also
+* js long dates and ```convertFourFigitNumbers```, which if set to true makes the date converter 
+* convert 4 digit numbers to dates as well. All default values of these fields are set to ```false```
 * @returns The same object but with all relevant values converted to a date.
 * @example
 * import convert from 'ts-date-converter';

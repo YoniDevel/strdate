@@ -1,5 +1,5 @@
 {
-  "name": "dater",
+  "name": "dateit",
   "version": "1.0.0",
   "description": "A package for converting your fields to dates",
   "main": "index.js",
@@ -11,7 +11,7 @@
   },
   "keywords": [
     "date",
-    "dater"
+    "dateit"
   ],
   "author": "Joni Moreno",
   "license": "MIT",

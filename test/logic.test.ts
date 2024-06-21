@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import convert from "../src/index.js";
+import regexes from "../src/regexes.js";
 
 describe("ts-convert", () => {
   describe("Single values (not objects or arrays)", () => {
@@ -34,102 +35,110 @@ describe("ts-convert", () => {
     });
 
     describe("ISO dates", () => {
-      test("Should convert an ISO date string appropriately to the precise date", () => {
-        const randomIsoDateString1 = "2024-12-01T15:25:55.567Z";
-        const randomIsoDateString2 = "2027-03-24T05:11:30.444Z";
+      describe("Full ISO dates", () => {
+        test("Should convert an ISO date string appropriately to the precise date", () => {
+          const randomIsoDateString1 = "2024-12-01T15:25:55.567Z";
+          const randomIsoDateString2 = "2027-03-24T05:11:30.444Z";
+  
+          expect(convert(randomIsoDateString1)).deep.eq(
+            new Date(randomIsoDateString1)
+          );
+          expect(convert(randomIsoDateString2).toISOString()).eq(
+            randomIsoDateString2
+          );
+          expect(convert(randomIsoDateString2).constructor.toString()).contain(
+            "function Date"
+          );
+        });
+  
+        test("Should convert an ISO date string without miliseconds to the right date", () => {
+          const randomIsoDateStringWithoutMS = "2024-06-01T15:25:55Z";
+          const randomIsoDateStringWithMS = "2024-06-01T15:25:55.000Z";
+  
+          expect(convert(randomIsoDateStringWithoutMS)).deep.eq(
+            new Date(randomIsoDateStringWithoutMS)
+          );
+          expect(convert(randomIsoDateStringWithoutMS).toISOString()).eq(
+            randomIsoDateStringWithMS
+          );
+          expect(
+            convert(randomIsoDateStringWithoutMS).constructor.toString()
+          ).contain("function Date");
+        });
 
-        expect(convert(randomIsoDateString1)).deep.eq(
-          new Date(randomIsoDateString1)
-        );
-        expect(convert(randomIsoDateString2).toISOString()).eq(
-          randomIsoDateString2
-        );
-        expect(convert(randomIsoDateString2).constructor.toString()).contain(
-          "function Date"
-        );
+        test("Should keep an ISO date string with an invalid month as is because it will fail the regex test", () => {
+          const invalidMonthIsoDateString = "2024-30-01T15:25:55.567Z";
+
+          expect(convert(invalidMonthIsoDateString)).eq(
+            invalidMonthIsoDateString
+          );
+        });
+
+        test("Should keep an ISO date string with an invalid day as is because it will fail the regex test", () => {
+          const invalidDayIsoDateString = "2024-06-55T15:25:55.567Z";
+
+          expect(convert(invalidDayIsoDateString)).eq(invalidDayIsoDateString);
+        });
+
+        test("Should keep an ISO date string with an invalid hour as is because it will fail the regex test", () => {
+          const invalidHourIsoDateString = "2024-06-55T30:25:55.567Z";
+
+          expect(convert(invalidHourIsoDateString)).eq(invalidHourIsoDateString);
+        });
+
+        test("Should keep an ISO date string with invalid minutes as is because it will fail the regex test", () => {
+          const invalidDayIsoDateString = "2024-06-55T15:78:55.567Z";
+
+          expect(convert(invalidDayIsoDateString)).eq(invalidDayIsoDateString);
+        });
+
+        test("Should keep an ISO date string with invalid seconds as is because it will fail the regex test", () => {
+          const invalidDayIsoDateString = "2024-06-55T15:25:990.567Z";
+
+          expect(convert(invalidDayIsoDateString)).eq(invalidDayIsoDateString);
+        });
+
+        test("Should keep an ISO date string with invalid miliseconds as is because it will fail the regex test", () => {
+          const invalidDayIsoDateString = "2024-06-55T15:78:55.1234Z";
+
+          expect(convert(invalidDayIsoDateString)).eq(invalidDayIsoDateString);
+        });
       });
 
-      test("Should convert an ISO date string without miliseconds to the right date", () => {
-        const randomIsoDateStringWithoutMS = "2024-06-01T15:25:55Z";
-        const randomIsoDateStringWithMS = "2024-06-01T15:25:55.000Z";
-
-        expect(convert(randomIsoDateStringWithoutMS)).deep.eq(
-          new Date(randomIsoDateStringWithoutMS)
-        );
-        expect(convert(randomIsoDateStringWithoutMS).toISOString()).eq(
-          randomIsoDateStringWithMS
-        );
-        expect(
-          convert(randomIsoDateStringWithoutMS).constructor.toString()
-        ).contain("function Date");
-      });
-
-      test("Should convert a non full ISO date string that has no hour specified to a date", () =>
-        () => {
+      describe("Non full ISO dates", () => {
+        test("Should not convert a non full ISO date string by default", () => {
           const randomIsoDateStringNotFull = "1945-04-23";
 
-          expect(convert(randomIsoDateStringNotFull)).deep.eq(
-            new Date(randomIsoDateStringNotFull)
-          );
-          expect(convert(randomIsoDateStringNotFull).toISOString()).eq(
-            randomIsoDateStringNotFull
-          );
-          expect(
-            convert(randomIsoDateStringNotFull).constructor.toString()
-          ).contain("function Date");
+          expect(convert(randomIsoDateStringNotFull)).eq(randomIsoDateStringNotFull);
         });
 
-      test("Should convert a non full ISO date string that has only month and year specified to a date", () =>
-        () => {
-          const randomIsoDateStringNotFull = "2008-2";
+        test("Should not convert a non full ISO date string that has only month and year specified to a date by default", () => {
+          const randomIsoDateStringNotFull = "2008-02";
 
-          expect(convert(randomIsoDateStringNotFull)).deep.eq(
-            new Date(randomIsoDateStringNotFull)
-          );
-          expect(convert(randomIsoDateStringNotFull).toISOString()).eq(
-            randomIsoDateStringNotFull
-          );
-          expect(
-            convert(randomIsoDateStringNotFull).constructor.toString()
-          ).contain("function Date");
+          expect(convert(randomIsoDateStringNotFull)).eq(randomIsoDateStringNotFull);
         });
 
-      test("Should keep an ISO date string with an invalid month as is because it will fail the regex test", () => {
-        const invalidMonthIsoDateString = "2024-30-01T15:25:55.567Z";
+        test("Should convert a non full ISO date string if option is true", () => {
+          const randomIsoDateStringNotFull = "1945-04-23";
 
-        expect(convert(invalidMonthIsoDateString)).eq(
-          invalidMonthIsoDateString
-        );
-      });
+          expect(convert(randomIsoDateStringNotFull, { convertNonFullIsoDates: true })).deep.eq(
+            new Date(randomIsoDateStringNotFull)
+          );
+          expect(
+            convert(randomIsoDateStringNotFull, { convertNonFullIsoDates: true }).constructor.toString()
+          ).contain("function Date");
+        });
+  
+        test("Should convert a non full ISO date string that has only month and year specified to a date if option is on", () => {
+          const randomIsoDateStringNotFull = "2008-02";
 
-      test("Should keep an ISO date string with an invalid day as is because it will fail the regex test", () => {
-        const invalidDayIsoDateString = "2024-06-55T15:25:55.567Z";
-
-        expect(convert(invalidDayIsoDateString)).eq(invalidDayIsoDateString);
-      });
-
-      test("Should keep an ISO date string with an invalid hour as is because it will fail the regex test", () => {
-        const invalidHourIsoDateString = "2024-06-55T30:25:55.567Z";
-
-        expect(convert(invalidHourIsoDateString)).eq(invalidHourIsoDateString);
-      });
-
-      test("Should keep an ISO date string with invalid minutes as is because it will fail the regex test", () => {
-        const invalidDayIsoDateString = "2024-06-55T15:78:55.567Z";
-
-        expect(convert(invalidDayIsoDateString)).eq(invalidDayIsoDateString);
-      });
-
-      test("Should keep an ISO date string with invalid seconds as is because it will fail the regex test", () => {
-        const invalidDayIsoDateString = "2024-06-55T15:25:990.567Z";
-
-        expect(convert(invalidDayIsoDateString)).eq(invalidDayIsoDateString);
-      });
-
-      test("Should keep an ISO date string with invalid miliseconds as is because it will fail the regex test", () => {
-        const invalidDayIsoDateString = "2024-06-55T15:78:55.1234Z";
-
-        expect(convert(invalidDayIsoDateString)).eq(invalidDayIsoDateString);
+          expect(convert(randomIsoDateStringNotFull, { convertNonFullIsoDates: true })).deep.eq(
+            new Date(randomIsoDateStringNotFull)
+          );
+          expect(
+            convert(randomIsoDateStringNotFull, { convertNonFullIsoDates: true }).constructor.toString()
+          ).contain("function Date");
+        });
       });
     });
 
@@ -235,7 +244,7 @@ describe("ts-convert", () => {
         },
       };
 
-      expect(convert(complexObject)).deep.eq({
+      expect(convert(complexObject, { convertNonFullIsoDates: true })).deep.eq({
         ...complexObject,
         dateOfBirth: new Date(complexObject.dateOfBirth),
         mealTimes: {
@@ -292,7 +301,7 @@ describe("ts-convert", () => {
         "Hello world",
         "2008-02",
       ];
-      expect(convert(arr, { convertLongDates: true })).deep.eq([
+      expect(convert(arr, { convertLongDates: true, convertNonFullIsoDates: true })).deep.eq([
         new Date("2024-06-15"),
         34,
         new Date("Feb 2 1977"),
@@ -305,10 +314,22 @@ describe("ts-convert", () => {
     test("Should convert only the elements in an array which are ISO date strings to date even if they are nested", () => {
       const arr = [
         ["2024-06-15"],
-        { a: "hello", b: 4 },
+        { a: "10/10/2010", b: 4 },
         true,
+        [[[{ myName: "is", today: "May 3 1869" }]]],
         { c: ["2024-06-24T11:33:02.789Z"] },
       ];
+      expect(convert(arr, { convertShortDates: true, convertLongDates: true })).deep.eq([
+        [new Date("2024-06-15")],
+        { a: new Date("10/10/2010"), b: 4 },
+        true,
+        [[[{ myName: "is", today: new Date("May 3 1869") }]]],
+        { c: [new Date("2024-06-24T11:33:02.789Z")] },
+      ]);
+    });
+
+    test('Should keep an empty array as is', () => {
+      expect(convert([])).deep.eq([]);
     });
   });
 });
