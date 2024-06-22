@@ -15,6 +15,7 @@ import dateit from dateit;
 
 ## Behaviours
 
+***Before reading this, you should know the different kinds of dates in typescript. You can read about them [here](https://www.w3schools.com/js/js_date_formats.asp)***
 ### Non convertable strings
 Don't worry, dateit will keep them as strings:
 
@@ -38,7 +39,7 @@ dateit will keep them as numbers.
 const a = dateit(456);
 const b = dateit(5678.8);
 const c = dateit(1977);
-// a = 456, b = 5678.8, c = 1977 (by default), d = new Date("1977")
+// a = 456, b = 5678.8, c = 1977
 ```
 
 ### Booleans
@@ -58,13 +59,13 @@ const a = dateit("2024-12-01T15:25:55.567Z");
 // a = new Date("2024-12-01T15:25:55.567Z")
 ```
 
-if the year/month/day exceed their maximum respectively (for example ```2024-23-01T15:25:55.567Z``` or ```2024-12-40T15:25:55.567Z```), dateit will keep them as strings:
+If the year/month/day exceed their maximum respectively (for example ```2024-23-01T15:25:55.567Z``` or ```2024-12-40T15:25:55.567Z```), dateit will keep them as strings:
 ```ts
 const a = dateit("2024-30-01T15:25:55.567Z");
 // a = "2024-30-01T15:25:55.567Z"
 ```
 
-dateit will convert ISO dates which are missing miliseconds:
+dateit will also convert ISO dates which are missing miliseconds:
 ```ts
 const a = dateit("2024-06-01T15:25:55Z");
 // a = new Date("2024-06-01T15:25:55Z")
@@ -124,7 +125,7 @@ const convertedObject = dateit(objToConvert, { convertShortDates: true });
 ```
 ***Note: If the ```convertShortDates``` was set to ```false``` here, The field ```objToConvert.kids.daughter``` would have remained a string.***
 
-dateit will access every field and nested field in order to ensure everythin relevant is converted.
+dateit will access every field and nested field in order to ensure everything relevant is converted.
 
 ### Arrays
 The behaviour dateit implements for arrays is identical to the behaviour twords objects.
@@ -149,7 +150,7 @@ const a = dateit(arr, { convertLongDates: true, convertNonFullIsoDates: true });
 ]
 */
 ```
-***Note: If the ```convertLongDates``` and the ```convertNonFullIsoDates``` were set to ```false``` here, all the elements that were converted to dates would have remained strings.***
+***Note: If the ```convertLongDates``` and the ```convertNonFullIsoDates``` options were set to ```false``` here, all the elements that were converted to dates would have remained strings.***
 
 
 ## Config
