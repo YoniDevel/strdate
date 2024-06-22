@@ -1,5 +1,4 @@
 # dateit
-=====
 
 A typescript package for converting the fields in your objects to strings.
 
@@ -13,10 +12,8 @@ Let's say you're requesting data from another service, and you want to convert a
 ```ts
 import dateit from dateit;
 ```
-=====
 
 ## Behaviours
-=====
 
 ### Non convertable strings
 Don't worry, dateit will keep them as strings:
