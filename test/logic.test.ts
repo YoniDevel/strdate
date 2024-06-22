@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
 
 import dateit from "../src/index.js";
-import regexes from "../src/regexes.js";
 
 describe("ts-convert", () => {
   describe("Single values (not objects or arrays)", () => {
