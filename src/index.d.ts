@@ -1,4 +1,4 @@
-export declare type DateConverterConfig = {
+export declare type DateitConfig = {
   convertShortDates?: boolean;
   convertLongDates?: boolean;
   convertNonFullIsoDates?: boolean;
@@ -43,4 +43,4 @@ export declare type DateConverterConfig = {
   //}
 */
 
-export declare function convert(obj: any, config: DateConverterConfig): any;
+export declare function convert(obj: any, config: DateitConfig): any;
