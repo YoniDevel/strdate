@@ -9,7 +9,6 @@
       "module": "CommonJS",
       "declaration": true,
       "isolatedModules": true,
-      "noEmit": true,
       "outDir": "dist"
   },
   "include": ["src"],
