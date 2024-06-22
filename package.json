@@ -1,6 +1,6 @@
 {
   "name": "strdate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A package for converting your fields to dates",
   "main": "./index.mjs",
   "module": "./index.mjs",
