@@ -1,5 +1,4 @@
 node_modules
 .npmrc
-/src
 tsconfig.json
 tsup.config.ts
