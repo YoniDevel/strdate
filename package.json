@@ -11,7 +11,7 @@
   "scripts": {
     "test": "vitest",
     "dev": "nodemon index.ts",
-    "build": "tsup",
+    "build": "tsc",
     "start": "node index.js"
   },
   "keywords": [
