@@ -28,8 +28,8 @@ const convertIfConvertable = (value: any, config: DateitConfig): any =>
   ? convertToDate(value)
   : value;
 
-const convert = (obj: any, config: DateitConfig = {}): any => 
+const dateit = (obj: any, config: DateitConfig = {}): any => 
   traverse.map(obj, (value: any) => 
     convertIfConvertable(value, config)
   );
-export default convert;
+export default dateit;
