@@ -7,7 +7,7 @@
     "strict": true,
     "skipDefaultLibCheck": false,
     "skipLibCheck": false,
-    "moduleResolution": "node"
+    "moduleResolution": "node16"
   },
   "include": ["src/*", "test/*"]
 }
