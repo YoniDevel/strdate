@@ -1,10 +1,13 @@
 {
   "name": "strdate",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A package for converting your fields to dates",
   "main": "./index.mjs",
   "module": "./index.mjs",
   "types": "./index.d.ts",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "url": "https://github.com/YoniDevel/strdate"
   },
