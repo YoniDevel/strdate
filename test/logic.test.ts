@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 
 import strdate from "../src/index.js";
 
-describe("ts-convert", () => {
+describe("strdate", () => {
   describe("Single values (not objects or arrays)", () => {
     describe("Non convertable values", () => {
       test("Should keep a non numeric string as is", () => {
