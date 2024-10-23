@@ -8,7 +8,7 @@ Let's say you're requesting data from another service, and you want to convert a
 
 ## install using:
 
-`> npm install datify`
+`> npm install strdate`
 
 ## How to use strdate
 
